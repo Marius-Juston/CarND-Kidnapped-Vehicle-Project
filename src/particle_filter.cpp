@@ -130,7 +130,7 @@ void ParticleFilter::dataAssociation(Particle &particle,
       }
     }
 
-    particle.associations.push_back(index);
+    particle.associations.push_back(index + 1);
   }
 }
 
@@ -237,7 +237,7 @@ double ParticleFilter::getWeight(const Particle &particle, const Map &map, const
     x = particle.sense_x[i];
     y = particle.sense_y[i];
 
-    index = particle.associations[i];
+    index = particle.associations[i] - 1;
 
     landmark_x = map.landmark_list[index].x_f;
     landmark_y = map.landmark_list[index].y_f;
