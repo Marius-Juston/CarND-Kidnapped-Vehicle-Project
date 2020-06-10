@@ -125,6 +125,7 @@ void ParticleFilter::dataAssociation(Particle &particle,
       distance = dist(x, y, map_landmarks.landmark_list[0].x_f, map_landmarks.landmark_list[0].y_f);
 
       if (distance < min_dist) {
+        min_dist = distance;
         index = j;
       }
     }
