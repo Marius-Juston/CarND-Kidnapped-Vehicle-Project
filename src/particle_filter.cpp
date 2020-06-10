@@ -155,7 +155,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
   double y;
   weights.clear();
 
-  for (auto particle : particles) {
+  for (auto &particle : particles) {
     particle.sense_x.clear();
     particle.sense_y.clear();
 
