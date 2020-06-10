@@ -235,7 +235,7 @@ double ParticleFilter::getWeight(const Particle &particle, const Map &map, const
 
   for (int i = 0; i < particle.associations.size(); ++i) {
     x = particle.sense_x[i];
-    y = particle.sense_x[i];
+    y = particle.sense_y[i];
 
     index = particle.associations[i];
 
