@@ -160,8 +160,9 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
     particle.sense_y.clear();
 
     for (auto observation : observations) {
-      x = observation.x * (particle.x + cos(particle.theta) - sin(particle.theta));
-      y = observation.y * (particle.y + sin(particle.theta) + cos(particle.theta));
+      x = particle.x + (observation.x * cos(particle.theta)) - (observation.y * sin(particle.theta));
+      y = particle.y + (observation.x * sin(particle.theta)) + (observation.y * cos(particle.theta));
+
 
       particle.sense_x.push_back(x);
       particle.sense_y.push_back(y);
