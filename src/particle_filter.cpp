@@ -122,7 +122,7 @@ void ParticleFilter::dataAssociation(Particle &particle,
     double min_dist = dist(x, y, map_landmarks.landmark_list[0].x_f, map_landmarks.landmark_list[0].y_f);
 
     for (int j = 1; j < map_landmarks.landmark_list.size(); ++j) {
-      distance = dist(x, y, map_landmarks.landmark_list[0].x_f, map_landmarks.landmark_list[0].y_f);
+      distance = dist(x, y, map_landmarks.landmark_list[j].x_f, map_landmarks.landmark_list[j].y_f);
 
       if (distance < min_dist) {
         min_dist = distance;
