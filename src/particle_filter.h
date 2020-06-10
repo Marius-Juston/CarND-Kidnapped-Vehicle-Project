@@ -102,6 +102,8 @@ class ParticleFilter {
     return is_initialized;
   }
 
+  double getWeight(const Particle& particle, const Map& map, const double position_std[]);
+
   /**
    * Used for obtaining debugging information related to particles.
    */

@@ -200,3 +200,28 @@ string ParticleFilter::getSenseCoord(const Particle &best, const string &coord) 
   s = s.substr(0, s.length() - 1);  // get rid of the trailing space
   return s;
 }
+double ParticleFilter::getWeight(const Particle &particle, const Map &map, const double position_std[]) {
+  double x;
+  double y;
+  double landmark_x;
+  double landmark_y;
+  double x_std = position_std[0];
+  double y_std = position_std[1];
+  int index;
+  double weight = 1;
+
+  for (int i = 0; i < particle.associations.size(); ++i) {
+    x = particle.sense_x[i];
+    y = particle.sense_x[i];
+
+    index = particle.associations[i];
+
+    landmark_x = map.landmark_list[index].x_f;
+    landmark_y = map.landmark_list[index].y_f;
+
+    weight *= exp(-(pow(x - landmark_x, 2) / (2 * x_std * x_std) + pow(y - landmark_y, 2) / (2 * y_std * y_std)))
+        / (2 * M_PI * x_std * y_std);
+  }
+
+  return weight;
+}
