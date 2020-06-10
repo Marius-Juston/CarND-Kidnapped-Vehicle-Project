@@ -150,6 +150,24 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
    *   (look at equation 3.33) http://planning.cs.uiuc.edu/node99.html
    */
 
+  double x;
+  double y;
+
+  for (auto particle : particles) {
+    particle.sense_x.clear();
+    particle.sense_y.clear();
+
+    for (auto observation : observations) {
+      x = observation.x * (particle.x + cos(particle.theta) - sin(particle.theta));
+      y = observation.y * (particle.y + sin(particle.theta) + cos(particle.theta));
+
+      particle.sense_x.push_back(x);
+      particle.sense_y.push_back(y);
+
+      dataAssociation(particle, map_landmarks);
+      particle.weight = getWeight(particle, map_landmarks,std_landmark );
+    }
+  }
 }
 
 void ParticleFilter::resample() {
