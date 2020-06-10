@@ -193,6 +193,7 @@ void ParticleFilter::resample() {
    *   http://en.cppreference.com/w/cpp/numeric/random/discrete_distribution
    */
 
+
 }
 
 void ParticleFilter::SetAssociations(Particle &particle,
@@ -254,11 +255,12 @@ double ParticleFilter::getWeight(const Particle &particle, const Map &map, const
     landmark_x = map.landmark_list[index].x_f;
     landmark_y = map.landmark_list[index].y_f;
 
-    weight *= exp(-(pow(x - landmark_x, 2) / (2 * x_std * x_std) + pow(y - landmark_y, 2) / (2 * y_std * y_std)))
+    double w = exp(-(pow(x - landmark_x, 2) / (2 * x_std * x_std) + pow(y - landmark_y, 2) / (2 * y_std * y_std)))
         / (2 * M_PI * x_std * y_std);
 
 //    std::cout << index << "\t\t" << landmark_x << "\t\t" << landmark_y << "\t\t" << w << std::endl;
 
+    weight *= w;
   }
 
   return weight;
