@@ -166,10 +166,12 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
       particle.sense_x.push_back(x);
       particle.sense_y.push_back(y);
-
-      dataAssociation(particle, map_landmarks);
-      particle.weight = getWeight(particle, map_landmarks, std_landmark);
     }
+    dataAssociation(particle, map_landmarks);
+
+    particle.weight = getWeight(particle, map_landmarks, std_landmark);
+    weights.push_back(particle.weight);
+
   }
 }
 
