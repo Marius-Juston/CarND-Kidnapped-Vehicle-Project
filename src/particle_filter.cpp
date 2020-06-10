@@ -68,6 +68,33 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
    *  http://www.cplusplus.com/reference/random/default_random_engine/
    */
 
+  normal_distribution<double> dist_x(0, std_pos[0]);
+  normal_distribution<double> dist_y(0, std_pos[1]);
+  normal_distribution<double> dist_theta(0, std_pos[2]);
+
+  double x;
+  double y;
+  double theta;
+
+  for (auto &particle : particles) {
+    if (yaw_rate == 0) {
+      x = particle.x + velocity * delta_t * cos(particle.theta);
+      y = particle.y + velocity * delta_t * sin(particle.theta);
+      theta = particle.theta;
+    } else {
+      x = particle.x + velocity / yaw_rate * (sin(particle.theta + yaw_rate * delta_t) - sin(particle.theta));
+      y = particle.y + velocity / yaw_rate * (cos(particle.theta));
+      theta = particle.theta + yaw_rate * delta_t;
+    }
+
+    x += dist_x(gen);
+    y += dist_y(gen);
+    theta += dist_theta(gen);
+
+    particle.x = x;
+    particle.y = y;
+    particle.theta = theta;
+  }
 }
 
 void ParticleFilter::dataAssociation(vector<LandmarkObs> predicted,
@@ -126,7 +153,7 @@ void ParticleFilter::SetAssociations(Particle &particle,
   particle.sense_y = sense_y;
 }
 
-string ParticleFilter::getAssociations(Particle best) {
+string ParticleFilter::getAssociations(const Particle &best) {
   vector<int> v = best.associations;
   std::stringstream ss;
   copy(v.begin(), v.end(), std::ostream_iterator<int>(ss, " "));
@@ -135,7 +162,7 @@ string ParticleFilter::getAssociations(Particle best) {
   return s;
 }
 
-string ParticleFilter::getSenseCoord(Particle best, string coord) {
+string ParticleFilter::getSenseCoord(const Particle &best, const string &coord) {
   vector<double> v;
 
   if (coord == "X") {
