@@ -102,13 +102,13 @@ class ParticleFilter {
     return is_initialized;
   }
 
-  double getWeight(const Particle& particle, const Map& map, const double position_std[]);
+  double getWeight(const Particle &particle, const Map &map, const double position_std[]);
 
   /**
    * Used for obtaining debugging information related to particles.
    */
-  std::string getAssociations(const Particle& best);
-  std::string getSenseCoord(const Particle& best, const std::string& coord);
+  std::string getAssociations(const Particle &best);
+  std::string getSenseCoord(const Particle &best, const std::string &coord);
 
   // Set of current particles
   std::vector<Particle> particles;

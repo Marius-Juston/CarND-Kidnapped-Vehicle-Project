@@ -57,7 +57,7 @@ void ParticleFilter::init(double x, double y, double theta, double std[]) {
     particles.push_back(particle);
   }
 
-  is_initialized= true;
+  is_initialized = true;
 }
 
 void ParticleFilter::prediction(double delta_t, double std_pos[],
@@ -165,7 +165,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
       particle.sense_y.push_back(y);
 
       dataAssociation(particle, map_landmarks);
-      particle.weight = getWeight(particle, map_landmarks,std_landmark );
+      particle.weight = getWeight(particle, map_landmarks, std_landmark);
     }
   }
 }
