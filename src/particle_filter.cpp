@@ -96,6 +96,9 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
     particle.x = x;
     particle.y = y;
     particle.theta = theta;
+
+//    std::cout << particle.id << '\t' << particle.x << '\t' << particle.y << '\t' << particle.theta << '\t'
+//              << particle.weight << std::endl;
   }
 }
 
@@ -163,6 +166,13 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
       x = particle.x + (observation.x * cos(particle.theta)) - (observation.y * sin(particle.theta));
       y = particle.y + (observation.x * sin(particle.theta)) + (observation.y * cos(particle.theta));
 
+//      std::cout << round(particle.x) << '\t'
+//                << round(particle.y) << '\t'
+//                << round(observation.x) << '\t'
+//                << round(observation.y) << '\t'
+//                << round(particle.theta * 180. / M_PI) << '\t'
+//                << round(x) << '\t'
+//                << round(y) << std::endl;
 
       particle.sense_x.push_back(x);
       particle.sense_y.push_back(y);
@@ -233,6 +243,8 @@ double ParticleFilter::getWeight(const Particle &particle, const Map &map, const
   int index;
   double weight = 1;
 
+//  std::cout << particle.associations.size() << std::endl;
+
   for (int i = 0; i < particle.associations.size(); ++i) {
     x = particle.sense_x[i];
     y = particle.sense_y[i];
@@ -244,6 +256,9 @@ double ParticleFilter::getWeight(const Particle &particle, const Map &map, const
 
     weight *= exp(-(pow(x - landmark_x, 2) / (2 * x_std * x_std) + pow(y - landmark_y, 2) / (2 * y_std * y_std)))
         / (2 * M_PI * x_std * y_std);
+
+//    std::cout << index << "\t\t" << landmark_x << "\t\t" << landmark_y << "\t\t" << w << std::endl;
+
   }
 
   return weight;
